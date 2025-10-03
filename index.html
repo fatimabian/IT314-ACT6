@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="container">
+
+        <form action="index.html" id="loginForm">
+            <h1>Welcome Back, Alchemist!</h1>
+            <h2>Equivalent Exchange Required</h2>
+
+            <input type="text" name="username" id="username" placeholder="Username" required>
+            <input type="password" name="password" id="password" placeholder="Password" required>
+
+            <div class="options">
+                 <label for="remember">
+                     <input type="checkbox" name="remember" value="yes"> Remember Me
+                 </label>
+                <a href="forgotpass.html" class="forgot-link">Forgot Password?</a>
+            </div>
+
+            <button type="submit">Log in</button>
+            <div class="toggle-link">
+                Don't have an account? <a href="register.html">Register</a>
+            </div>
+
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // --- Static Credentials ---
+            const VALID_USERNAME = "admin";
+            const VALID_PASSWORD = "12345";
+            const LANDING_PAGE = "landingPage.html"; 
+
+            // Initialize the jQuery Validation Plugin on the form
+            $("#loginForm").validate({
+                // validation rules
+                rules: {
+                    username: {
+                        required: true,
+                        minlength: 3
+                    },
+                    password: {
+                        required: true,
+                        minlength: 5
+                    }
+                },
+                // custom error messages
+                messages: {
+                    username: {
+                        required: "Please enter your username.",
+                        minlength: "Your username must be at least 3 characters long."
+                    },
+                    password: {
+                        required: "Please provide a password.",
+                        minlength: "Your password must be at least 5 characters long."
+                    }
+                },
+                
+                // Submission Handler
+                submitHandler: function(form) {
+                    const enteredUsername = $("#username").val();
+                    const enteredPassword = $("#password").val();
+
+                    // Check against static credentials
+                    if (enteredUsername === VALID_USERNAME && enteredPassword === VALID_PASSWORD) {
+                        window.location.href = LANDING_PAGE;
+                    } else {
+                        alert("Invalid username or password. Please try again.");
+                        $("#password").val(''); 
+                    }
+                    
+                    return false;
+                },  
+
+                onfocusout: true, 
+                onkeyup: true
+            });
+        });
+    </script>
+
+</body>
+</html>
